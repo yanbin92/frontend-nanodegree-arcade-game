@@ -1,8 +1,9 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(parameter) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    this.x=parameter.x;
+    this.y=parameter.y;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -14,23 +15,77 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.speed=dt;
+    var randomInt=Math.floor(Math.random()*5)
+    this.x+=this.speed*randomInt;
+    this.render();
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    if(this.x>=5)
+        this.x=0;
+    ctx.drawImage(Resources.get(this.sprite), this.x*101, this.y*83);
 };
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
-
+var player_sprites=['images/char-boy.png','images/char-cat-girl.png','images/char-horn-girl.png','images/char-cat-girl.png']
+var Player=function(parameter){
+    Enemy.call(this,parameter)
+    this.sprite = player_sprites[parameter.player]
+   
+}
+Player.prototype=Object.create(Enemy.prototype);
+Player.prototype.constructor=Player;
+Player.prototype.update=function(){
+    //碰撞检测 
+    var that=this;
+  setInterval(function(){
+    if(that.y<4){
+        allEnemies.forEach(function(enemy) {
+            if(enemy.y==that.y){
+                if(Math.abs(that.x-enemy.x)<=0.5){
+                    //碰撞了
+                    that.y=4;
+                    that.x=2;
+                    that.render();
+                }
+            }
+        });
+    }
+  },100);
+}
+Player.prototype.handleInput=function(bearing){
+  switch(bearing){
+    case'left':    
+        if(this.x!=0)
+        this.x-=1;
+        break
+    case 'up':   
+    if(this.y!=0)
+        this.y-=1;
+        break
+    case 'right': 
+    //TODO  改成全局   
+    if(this.x!=4)
+        this.x+=1;
+        break
+    case 'down':   
+        if(this.y!=5)
+        this.y+=1;
+         break
+    this.render();
+  }
+}
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-
+var allEnemies=[new Enemy({x:0,y:1}),new Enemy({x:1,y:2}),
+    new Enemy({x:1,y:1}), new Enemy({x:2,y:1}),
+    new Enemy({x:3,y:2}),new Enemy({x:1,y:3})];
+var player=new Player({x:2,y:4,player:0});
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
