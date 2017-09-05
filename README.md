@@ -5,3 +5,6 @@ frontend-nanodegree-arcade-game
       <source id="mp4" src="https://github.com/yanbin92/frontend-nanodegree-arcade-game/blob/master/P5%2B-%2BArcadeGameDemo.mp4" type="video/mp4">
       <p>Your user agent does not support the HTML5 Video element.</p>
     </video>
+ #game show
+
+<iframe height=498 width=510 src="https://github.com/yanbin92/frontend-nanodegree-arcade-game/blob/master/P5%2B-%2BArcadeGameDemo.mp4" frameborder=0 allowfullscreen></iframe>
