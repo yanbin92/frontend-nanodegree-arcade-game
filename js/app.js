@@ -18,7 +18,7 @@ Enemy.prototype.update = function(dt) {
     this.speed=dt;
     var randomInt=Math.floor(Math.random()*5)
     this.x+=this.speed*randomInt;
-    this.render();
+    // this.render();
 };
 
 // Draw the enemy on the screen, required method for game
@@ -41,8 +41,8 @@ Player.prototype=Object.create(Enemy.prototype);
 Player.prototype.constructor=Player;
 Player.prototype.update=function(){
     //碰撞检测 
-    var that=this;
-  setInterval(function(){
+  var that=this;
+//   setInterval(function(){
     if(that.y<4){
         allEnemies.forEach(function(enemy) {
             if(enemy.y==that.y){
@@ -50,12 +50,12 @@ Player.prototype.update=function(){
                     //碰撞了
                     that.y=4;
                     that.x=2;
-                    that.render();
+                    // that.render();
                 }
             }
         });
     }
-  },100);
+//   },100);
 }
 Player.prototype.handleInput=function(bearing){
   switch(bearing){
